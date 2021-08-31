@@ -25,8 +25,7 @@ app.use('/cart', cartRoutes)
 
 const { pid } = process
 const PORT = process.env.PORT || 3000
-const password = 'sander123'
-const url = `mongodb+srv://user001:${password}@cluster0.dkmff.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
+
 
 app.listen(PORT, () => {
   console.log(`Worker started Pid: ${pid}`)
