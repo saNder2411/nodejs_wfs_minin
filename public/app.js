@@ -5,9 +5,22 @@ const toCurrency = (price) => {
   }).format(price)
 }
 
-document.querySelectorAll('.price').forEach((node) => {
-  node.textContent = toCurrency(node.textContent)
-})
+const toDate = (date) =>
+  new Intl.DateTimeFormat('en-US', {
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+  }).format(new Date(date))
+
+  document.querySelectorAll('.price').forEach(node => {
+    node.textContent = toCurrency(node.textContent)
+  })
+  document.querySelectorAll('.date').forEach(node => {
+    node.textContent = toDate(node.textContent)
+  })
 
 const cartNode = document.querySelector('#cart')
 
@@ -21,12 +34,12 @@ if (cartNode) {
           if (cart.courses.length) {
             const html = cart.courses
               .map(
-                ({ id, title, count }) => `
+                ({ _id, title, count }) => `
             <tr>
               <td>${title}</td>
               <td>${count}</td>
               <td>
-                <button class='btn btm-small js-remove' data-id='${id}'>Delete</button>
+                <button class='btn btm-small js-remove' data-id='${_id}'>Delete</button>
               </td>
             </tr>
             `
