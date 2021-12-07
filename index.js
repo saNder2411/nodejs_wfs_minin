@@ -46,8 +46,8 @@ app.use('/add', addRoutes)
 app.use('/cart', cartRoutes)
 app.use('/orders', ordersRoutes)
 
-const { pid } = process
-const PORT = process.env.PORT || 3000
+const { pid, env } = process
+const PORT = env.PORT ?? 3000
 
 async function start() {
   try {
@@ -62,7 +62,7 @@ async function start() {
       await user.save()
     }
     app.listen(PORT, () => {
-      console.log(`Worker started Pid: ${pid}`)
+      console.log(`Worker started with Process id: ${pid}`)
       console.log(`Server started on port http://localhost:${PORT}`)
     })
   } catch (err) {
