@@ -1,9 +1,8 @@
-const toCurrency = (price) => {
-  return new Intl.NumberFormat('en-US', {
+const toCurrency = (price) =>
+  new Intl.NumberFormat('en-US', {
     currency: 'USD',
     style: 'currency',
   }).format(price)
-}
 
 document.querySelectorAll('.price').forEach((node) => {
   node.textContent = toCurrency(node.textContent)
