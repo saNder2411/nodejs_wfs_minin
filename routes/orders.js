@@ -8,10 +8,7 @@ router.get('/', async (req, res) => {
     const orders = await Order.find({ 'user.userId': req.user._id })
       .populate('user.userId')
       .then((docs) =>
-        docs.map((d) => ({
-          ...d._doc,
-          price: d.courses.reduce((sum, c) => (sum += c.count * c.course.price), 0),
-        }))
+        docs.map((d) => ({ ...d._doc, price: d.courses.reduce((sum, c) => (sum += c.count * c.course.price), 0) }))
       )
 
     res.render('orders', { title: 'Orders', isOrders: true, orders })
@@ -22,8 +19,8 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
-    const user = await req.user.populate('cart.items.courseId')
-    const courses = user.cart.items.map((c) => ({ course: { ...c.courseId._doc }, count: c.count }))
+    const userWithFullCartItems = await req.user.populate('cart.items.courseId')
+    const courses = userWithFullCartItems.cart.items.map((c) => ({ course: { ...c.courseId._doc }, count: c.count }))
     const order = new Order({ courses, user: { name: req.user.name, userId: req.user._id } })
 
     await order.save()
